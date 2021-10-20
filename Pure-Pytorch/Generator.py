@@ -1,21 +1,8 @@
+import torch
 from torch import nn
 
-
-def get_gen_loss(gen: Generator, disc: Discriminator, criterion, num_images, z_dim, device):
-    #     These are the steps you will need to complete:
-    #       1) Create noise vectors and generate a batch of fake images.
-    #           Remember to pass the device argument to the get_noise function.
-    #       2) Get the discriminator's prediction of the fake image.
-    #       3) Calculate the generator's loss. Remember the generator wants
-    #          the discriminator to think that its fake images are real
-    #     *Important*: You should NOT write your own loss function here - use criterion(pred, true)!
-
-    noise = get_noise(n_samples=num_images, z_dim=z_dim, device=device)
-    fake = gen(noise)
-    disc_pred = disc(fake)
-    loss = criterion(disc_pred, torch.ones_like(disc_pred))
-
-    return loss
+from Discriminator import Discriminator
+from utils import get_noise
 
 
 def get_generator_block(input_dim, output_dim):
@@ -45,3 +32,20 @@ class Generator(nn.Module):
 
     def get_gen(self):
         return self.gen
+
+
+def get_gen_loss(gen: Generator, disc: Discriminator, criterion, num_images, z_dim, device):
+    #     These are the steps you will need to complete:
+    #       1) Create noise vectors and generate a batch of fake images.
+    #           Remember to pass the device argument to the get_noise function.
+    #       2) Get the discriminator's prediction of the fake image.
+    #       3) Calculate the generator's loss. Remember the generator wants
+    #          the discriminator to think that its fake images are real
+    #     *Important*: You should NOT write your own loss function here - use criterion(pred, true)!
+
+    noise = get_noise(n_samples=num_images, z_dim=z_dim, device=device)
+    fake = gen(noise)
+    disc_pred = disc(fake)
+    loss = criterion(disc_pred, torch.ones_like(disc_pred))
+
+    return loss
