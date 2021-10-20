@@ -1,14 +1,6 @@
 import torch
-from torch import nn
-from tqdm.auto import tqdm
-from torchvision import transforms
-from torchvision.datasets import MNIST
-from torchvision.utils import make_grid
-from torch.utils.data import DataLoader
 from matplotlib import pyplot as plt
-
-from Discriminator import Discriminator
-from Generator import Generator
+from torchvision.utils import make_grid
 
 
 def get_noise(n_samples, z_dim, device='cpu'):
